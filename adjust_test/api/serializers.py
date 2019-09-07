@@ -10,7 +10,7 @@ class DynamicFieldsMetricSerializer(serializers.ModelSerializer):
 
         if fields is not None:
             fields = fields.split(',')
-            default_fields = {'impressions_sum', 'clicks_sum', 'installs_sum', 'spend_sum', 'revenue_sum'}
+            default_fields = {'impressions_sum', 'clicks_sum', 'installs_sum', 'spend_sum', 'revenue_sum', 'cpi'}
             allowed = set(fields) | default_fields
             existing = set(self.fields)
             for field_name in existing - allowed:
@@ -23,10 +23,14 @@ class MetricSerializer(DynamicFieldsMetricSerializer):
     installs_sum = serializers.IntegerField()
     spend_sum = serializers.FloatField()
     revenue_sum = serializers.FloatField()
+    cpi = serializers.SerializerMethodField()
+
+    def get_cpi(self, obj):
+        return round(obj['spend_sum'] + obj['revenue_sum'] / obj['installs_sum'])
 
     class Meta:
         model = Metric
         fields = ('date', 'channel', 'country', 'os', 'impressions_sum',
-                  'clicks_sum', 'installs_sum', 'spend_sum', 'revenue_sum')
+                  'clicks_sum', 'installs_sum', 'spend_sum', 'revenue_sum', 'cpi')
 
 # TODO add serializer for requests without 'group_by'

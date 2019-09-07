@@ -9,7 +9,6 @@ from .serializers import MetricSerializer
 
 class MetricsViewSet(viewsets.ModelViewSet):
     # TODO add allowed methods
-    # http://127.0.0.1:8000/api/metrics/?country=US&channel=adcolony&ordering=-spend&group_by=country,channel
 
     def get_queryset(self):
         queryset = Metric.objects.all()
