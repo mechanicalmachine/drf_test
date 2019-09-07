@@ -8,7 +8,6 @@ from .serializers import MetricSerializer
 
 
 class MetricsViewSet(viewsets.ModelViewSet):
-    # TODO add allowed methods
     allowed_methods = ['GET']
 
     def get_queryset(self):
@@ -44,10 +43,10 @@ class MetricsViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(date__lt=date_to)
 
         # TODO add serializer if there are no group_by params
+        # TODO show only required fields
         return queryset
 
     serializer_class = MetricSerializer
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
-    # # TODO add date_to and date_from to filterset_fields
     filterset_fields = ['channel', 'country', 'os']
     ordering_fields = '__all__'
