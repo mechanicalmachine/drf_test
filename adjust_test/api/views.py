@@ -9,6 +9,7 @@ from .serializers import MetricSerializer
 
 class MetricsViewSet(viewsets.ModelViewSet):
     # TODO add allowed methods
+    allowed_methods = ['GET']
 
     def get_queryset(self):
         queryset = Metric.objects.all()
