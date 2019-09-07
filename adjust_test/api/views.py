@@ -21,8 +21,8 @@ class MetricsViewSet(viewsets.ModelViewSet):
 
         group_by_list = group_by_str.split(',')
 
-        # allowed_groups = {'date', 'channel', 'country', 'os'}
-        if set(group_by_list): # <= allowed_groups:
+        allowed_groups = {'date', 'channel', 'country', 'os'}
+        if set(group_by_list) <= allowed_groups:
             queryset = queryset.values(
                 *group_by_list
             ).annotate(
