@@ -18,7 +18,15 @@
    ```bash
    &country=GB&os=android&channel=chartboost
    ```
- 
+ - for grouping one or more columns group_by with one or few parameters: date, channel, country, os, e.g.:
+   ```bash
+   &group_by=date,country,os
+   ```
+ - for sorting by any column in ascending order add parameter ordering with required column.
+ For sorting by any column in descending order just add "-" before column name, e.g.:
+    ```bash
+   &ordering=-date
+   ```
 
 ## Fill up db with data.
 1. Download test dump to project.
