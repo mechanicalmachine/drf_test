@@ -10,9 +10,9 @@ class DynamicFieldsMetricSerializer(serializers.ModelSerializer):
 
         if fields is not None:
             fields = fields.split(',')
-            # default_fields = {'impressions_sum', 'clicks_sum', 'installs_sum', 'spend_sum', 'revenue_sum'}
-            allowed = set(fields) # | default_fields
-            existing = set(self.fields) # | default_fields
+            default_fields = {'impressions_sum', 'clicks_sum', 'installs_sum', 'spend_sum', 'revenue_sum'}
+            allowed = set(fields) | default_fields
+            existing = set(self.fields)
             for field_name in existing - allowed:
                 self.fields.pop(field_name)
 
