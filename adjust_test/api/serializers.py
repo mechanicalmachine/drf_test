@@ -32,5 +32,3 @@ class MetricSerializer(DynamicFieldsMetricSerializer):
         model = Metric
         fields = ('date', 'channel', 'country', 'os', 'impressions_sum',
                   'clicks_sum', 'installs_sum', 'spend_sum', 'revenue_sum', 'cpi')
-
-# TODO add serializer for requests without 'group_by'

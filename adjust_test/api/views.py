@@ -42,7 +42,6 @@ class MetricsViewSet(viewsets.ModelViewSet):
         elif date_to:
             queryset = queryset.filter(date__lt=date_to)
 
-        # TODO add serializer if there are no group_by params
         # TODO show only required fields
         return queryset
 
