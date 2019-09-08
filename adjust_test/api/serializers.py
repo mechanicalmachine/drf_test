@@ -6,12 +6,15 @@ from .models import Metric
 class DynamicFieldsMetricSerializer(serializers.ModelSerializer):
     def __init__(self, *args, **kwargs):
         fields = kwargs['context']['request'].query_params.get('group_by', None)
+        show_fields = kwargs['context']['request'].query_params.get('show', set())
         super(DynamicFieldsMetricSerializer, self).__init__(*args, **kwargs)
+
+        if show_fields:
+            show_fields = set(show_fields.split(','))
 
         if fields is not None:
             fields = fields.split(',')
-            default_fields = {'impressions_sum', 'clicks_sum', 'installs_sum', 'spend_sum', 'revenue_sum', 'cpi'}
-            allowed = set(fields) | default_fields
+            allowed = set(fields) | show_fields
             existing = set(self.fields)
             for field_name in existing - allowed:
                 self.fields.pop(field_name)

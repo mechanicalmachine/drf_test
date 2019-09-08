@@ -45,7 +45,6 @@ class MetricsViewSet(viewsets.ModelViewSet):
         elif date_to:
             queryset = queryset.filter(date__lt=date_to)
 
-        # TODO show only required fields
         return queryset
 
     def get_serializer_class(self):
