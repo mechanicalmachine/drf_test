@@ -4,10 +4,13 @@ from rest_framework import viewsets
 from rest_framework import filters
 
 from .models import Metric
-from .serializers import MetricSerializer
+from .serializers import MetricSerializer, MetricGroupBySerializer
 
 
 class MetricsViewSet(viewsets.ModelViewSet):
+    filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
+    filterset_fields = ['channel', 'country', 'os']
+    ordering_fields = '__all__'
     allowed_methods = ['GET']
 
     def get_queryset(self):
@@ -23,7 +26,7 @@ class MetricsViewSet(viewsets.ModelViewSet):
 
         # Group_by filters
         allowed_groups = {'date', 'channel', 'country', 'os'}
-        if set(group_by_list) <= allowed_groups:
+        if group_by_list and set(group_by_list) <= allowed_groups:
             queryset = queryset.values(
                 *group_by_list
             ).annotate(
@@ -45,7 +48,8 @@ class MetricsViewSet(viewsets.ModelViewSet):
         # TODO show only required fields
         return queryset
 
-    serializer_class = MetricSerializer
-    filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
-    filterset_fields = ['channel', 'country', 'os']
-    ordering_fields = '__all__'
+    def get_serializer_class(self):
+        if self.request.query_params.get('group_by', None):
+            return MetricGroupBySerializer
+        else:
+            return MetricSerializer

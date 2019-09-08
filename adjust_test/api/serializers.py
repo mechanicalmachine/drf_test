@@ -17,7 +17,7 @@ class DynamicFieldsMetricSerializer(serializers.ModelSerializer):
                 self.fields.pop(field_name)
 
 
-class MetricSerializer(DynamicFieldsMetricSerializer):
+class MetricGroupBySerializer(DynamicFieldsMetricSerializer):
     impressions_sum = serializers.IntegerField()
     clicks_sum = serializers.IntegerField()
     installs_sum = serializers.IntegerField()
@@ -32,3 +32,9 @@ class MetricSerializer(DynamicFieldsMetricSerializer):
         model = Metric
         fields = ('date', 'channel', 'country', 'os', 'impressions_sum',
                   'clicks_sum', 'installs_sum', 'spend_sum', 'revenue_sum', 'cpi')
+
+
+class MetricSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Metric
+        fields = '__all__'
