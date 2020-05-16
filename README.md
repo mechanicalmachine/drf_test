@@ -1,4 +1,4 @@
-# adjust_test
+# drf_test
 
 To retrieve required data use url ```http://hostname:port/api/metrics/?``` with following bellow parameters.
 Use '&' sign between parameters if you need to use some of them.
